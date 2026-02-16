@@ -3,7 +3,7 @@ console.log("MovieHub: Система готова.");
 const playBtn = document.getElementById('welcomeBtn');
 
 playBtn.addEventListener('click', () => {
-    // Создаем эффект "Плеера" как в твоем Desktop-2
+    
     const playerOverlay = document.createElement('div');
     playerOverlay.style.position = 'fixed';
     playerOverlay.style.top = '0';
@@ -24,7 +24,7 @@ playBtn.addEventListener('click', () => {
 
     document.body.appendChild(playerOverlay);
 
-    // Закрыть плеер при клике
+    
     playerOverlay.onclick = () => {
         playerOverlay.remove();
     };
