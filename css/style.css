@@ -52,7 +52,7 @@ nav ul li a {
 
 .hero {
     height: 80vh;
-    background: url('https://images.wallpapersden.com/image/download/dune-2021-movie-hd_bWlpZ2mUmZqaraWkpJRma2ttrWdnZ20.jpg') center/cover no-repeat;
+    background: url('https://image.tmdb.org/t/p/original/xY5YwoLiKRb2lwaudOKRyxcmabi.jpg') center/cover no-repeat;
     position: relative;
     display: flex;
     align-items: flex-end;
@@ -134,16 +134,28 @@ nav ul li a {
 }
 
 .movie-grid {
-    display: flex;
-    gap: 25px;
+    display: flex;      
+    flex-wrap: nowrap;   
+    gap: 30px;          
+    justify-content: flex-start; 
+    padding-bottom: 20px;
+    overflow-x: auto;    
 }
 
 .movie-card {
-    width: 220px;
-    height: 330px;
+    min-width: 220px;    
+    height: 330px;       
+    background-color: #2F2F2F; 
     background-size: cover;
+    background-position: center;
     border-radius: 12px;
-    transition: transform 0.3s;
+    flex-shrink: 0;   
+    transition: transform 0.3s ease;
+}
+
+.movie-card:hover {
+    transform: scale(1.05); 
+    cursor: pointer;
 }
 
 .ticket {

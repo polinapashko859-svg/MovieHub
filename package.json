@@ -1,0 +1,27 @@
+{
+  "name": "moviehub",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/polinapashko859-svg/MovieHub.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/polinapashko859-svg/MovieHub/issues"
+  },
+  "homepage": "https://github.com/polinapashko859-svg/MovieHub#readme",
+  "dependencies": {
+    "lodash": "^4.17.23"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
