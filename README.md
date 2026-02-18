@@ -19,8 +19,8 @@
 
 ## 🔗 Ссылки
 
-- **Figma Prototype:** [(https://www.figma.com/design/p9BIelQfI4o59iu8zHI3wu/MovieHub?node-id=46-79&t=1HKan37487Nv2Syr-1)]
-- **GitHub Repository:** [(https://github.com/polinapashko859-svg/MovieHub)]
+- **Figma Prototype:** [figma](https://www.figma.com/design/p9BIelQfI4o59iu8zHI3wu/MovieHub?node-id=46-79&t=1HKan37487Nv2Syr-1)
+- **GitHub Repository:** [git](https://github.com/polinapashko859-svg/MovieHub)
 
 ## 🛠 Настройка и запуск
 
