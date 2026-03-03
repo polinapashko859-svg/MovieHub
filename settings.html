@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Настройки — MovieHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&family=Iceland&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body itemscope itemtype="https://schema.org/WebPage">
+    <!-- Боковое меню -->
+    <div class="side-menu" id="sideMenu">
+        <div class="side-menu__close" id="closeMenu">&times;</div>
+        <ul class="side-menu__list">
+            <li><a href="index.html">ГЛАВНАЯ</a></li>
+            <li><a href="categories.html">КАТЕГОРИИ</a></li>
+            <li><a href="tickets.html">БИЛЕТЫ</a></li>
+            <li><a href="news.html">НОВИНКИ</a></li>
+            <li class="side-menu__divider"></li>
+            <li><a href="profile.html">МОЙ ПРОФИЛЬ</a></li>
+            <li><a href="settings.html">НАСТРОЙКИ</a></li>
+            <li><a href="about.html">О ПРОЕКТЕ</a></li>
+        </ul>
+    </div>
+
+    <header class="header">
+        <div class="header__container">
+            <div class="header__left">
+                <div class="burger-menu"><span></span><span></span><span></span></div>
+                <div class="header__logo">MovieHub</div>
+            </div>
+            <nav class="header__nav">
+                <ul class="header__menu">
+                    <li><a href="index.html" class="header__link">ГЛАВНАЯ</a></li>
+                    <li><a href="categories.html" class="header__link">КАТЕГОРИИ</a></li>
+                    <li><a href="tickets.html" class="header__link">БИЛЕТЫ</a></li>
+                    <li><a href="news.html" class="header__link">НОВИНКИ</a></li>
+                </ul>
+            </nav>
+            <div class="header__actions">
+                <!-- Лупа удалена -->
+                <button class="icon-btn notify-bell" aria-label="Уведомления">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9C8A73" stroke-width="2">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                    </svg>
+                </button>
+                <div class="header__profile">
+                    <a href="profile.html"><img src="images/avatar_figma.png" alt="Профиль" class="header__avatar"></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main" style="padding-top: 150px;">
+        <h1 class="hero__title" style="text-align: center; font-size: 60px; color: white;">НАСТРОЙКИ</h1>
+        <div style="max-width: 700px; margin: 60px auto; background: rgba(255,255,255,0.02); padding: 40px; border-radius: 20px; border: 1px solid rgba(156,138,115,0.1);">
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 25px 0; border-bottom: 1px solid rgba(156,138,115,0.1);">
+                <span style="color: var(--accent-sand); font-size: 18px; font-family: 'Iceland'; letter-spacing: 2px;">ТЕМНАЯ ТЕМА</span>
+                <input type="checkbox" checked style="accent-color: var(--primary-red); width: 20px; height: 20px;">
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 25px 0; border-bottom: 1px solid rgba(156,138,115,0.1);">
+                <span style="color: var(--accent-sand); font-size: 18px; font-family: 'Iceland'; letter-spacing: 2px;">УВЕДОМЛЕНИЯ НА ПОЧТУ</span>
+                <input type="checkbox" style="accent-color: var(--primary-red); width: 20px; height: 20px;">
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 25px 0;">
+                <span style="color: var(--accent-sand); font-size: 18px; font-family: 'Iceland'; letter-spacing: 2px;">ЯЗЫК КОНТЕНТА</span>
+                <select style="background: var(--bg-dark-warm); color: white; border: 1px solid var(--accent-sand); padding: 5px 15px; border-radius: 5px;">
+                    <option>РУССКИЙ</option>
+                    <option>ENGLISH</option>
+                </select>
+            </div>
+            <button class="hero__btn hero__btn--outline" style="margin-top: 40px; width: 100%;">СОХРАНИТЬ ИЗМЕНЕНИЯ</button>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="footer__container">
+            <div class="footer__logo">MovieHub</div>
+            <nav class="footer__nav">
+                <a href="about.html">О проекте</a> 
+                <a href="help.html">Помощь</a> 
+                <a href="privacy.html">Политика конфиденциальности</a>
+            </nav>
+            <div class="footer__socials">VK • TG • GH</div>
+        </div>
+        <p class="footer__copyright">&copy; 2026 MovieHub. Дизайн выполнен для ЛР №3</p>
+    </footer>
+    <script src="js/script.js"></script>
+</body>
+</html>

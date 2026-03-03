@@ -1,0 +1,14 @@
+--primary-red: #530507;        
+--bg-dark-warm: #36110B;       
+--bg-main-dark: #1B0D0F;       
+--secondary-brown: #644B48;    
+--accent-sand: #9C8A73;        
+
+
+--font-logo: 'Inspiration', cursive;   
+--font-header: 'Iceland', serif;       
+--font-body: 'Inter', sans-serif;      
+
+
+--border-radius: 12px;         
+--transition-speed: 0.3s;      
