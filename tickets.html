@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Купить билеты на лучшие сеансы в MovieHub.">
+    <title>Билеты — MovieHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Homemade+Apple&family=Iceland&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body itemscope itemtype="https://schema.org/WebPage">
+    <!-- Боковая панель меню -->
+    <div class="side-menu" id="sideMenu">
+        <div class="side-menu__close" id="closeMenu">&times;</div>
+        <ul class="side-menu__list">
+            <li><a href="index.html">ГЛАВНАЯ</a></li>
+            <li><a href="categories.html">КАТЕГОРИИ</a></li>
+            <li><a href="tickets.html">БИЛЕТЫ</a></li>
+            <li><a href="news.html">НОВИНКИ</a></li>
+            <li class="side-menu__divider"></li>
+            <li><a href="profile.html">МОЙ ПРОФИЛЬ</a></li>
+            <li><a href="settings.html">НАСТРОЙКИ</a></li>
+            <li><a href="about.html">О ПРОЕКТЕ</a></li>
+        </ul>
+    </div>
+
+    <header class="header">
+        <div class="header__container">
+            <div class="header__left">
+                <div class="burger-menu"><span></span><span></span><span></span></div>
+                <div class="header__logo">MovieHub</div>
+            </div>
+            <nav class="header__nav">
+                <ul class="header__menu">
+                    <li><a href="index.html" class="header__link">ГЛАВНАЯ</a></li>
+                    <li><a href="categories.html" class="header__link">КАТЕГОРИИ</a></li>
+                    <li><a href="tickets.html" class="header__link header__link--active">БИЛЕТЫ</a></li>
+                    <li><a href="news.html" class="header__link">НОВИНКИ</a></li>
+                </ul>
+            </nav>
+            <div class="header__actions">
+                <!-- Кнопка поиска удалена -->
+                <button class="icon-btn notify-bell" aria-label="Уведомления">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9C8A73" stroke-width="2">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                    </svg>
+                </button>
+                <div class="header__profile">
+                    <a href="profile.html"><img src="images/avatar_figma.png" alt="Профиль" class="header__avatar"></a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="main" style="padding-top: 150px;">
+        <h1 class="hero__title" style="text-align: center; font-size: 80px; margin-bottom: 20px; color: white;">БИЛЕТЫ</h1>
+        <p style="text-align: center; color: var(--accent-sand); font-family: 'Iceland'; letter-spacing: 5px; opacity: 0.6; margin-bottom: 50px;">ВЫБЕРИТЕ ВАШ СЕАНС</p>
+
+        <section class="tickets-page-grid" style="padding: 0 80px 80px; justify-content: center; gap: 40px;">
+            <!-- Билет 1 -->
+            <article class="movie-card movie-card--ticket" itemscope itemtype="https://schema.org/Event">
+                <div class="ticket">
+                    <div class="ticket__header" itemprop="name">DUNE: PART II</div>
+                    <div class="ticket__body" style="font-size: 14px; margin: 15px 0; letter-spacing: 2px;">
+                        <time itemprop="startDate" datetime="2024-03-20T19:30">19:30 | IMAX</time>
+                    </div>
+                    <button class="hero__btn hero__btn--primary" style="padding: 10px 30px; font-size: 14px;">ЗАБРОНИРОВАТЬ</button>
+                    <div class="ticket__footer" style="margin-top: 20px; font-size: 10px; opacity: 0.5;">ROW: 05 SEAT: 12</div>
+                </div>
+            </article>
+
+            <!-- Билет 2 -->
+            <article class="movie-card movie-card--ticket">
+                <div class="ticket">
+                    <div class="ticket__header">AVATAR 3</div>
+                    <div class="ticket__body" style="font-size: 14px; margin: 15px 0; letter-spacing: 2px;">15:00 | 3D КИНО</div>
+                    <button class="hero__btn hero__btn--primary" style="padding: 10px 30px; font-size: 14px;">ЗАБРОНИРОВАТЬ</button>
+                    <div class="ticket__footer" style="margin-top: 20px; font-size: 10px; opacity: 0.5;">ROW: 02 SEAT: 08</div>
+                </div>
+            </article>
+
+            <!-- Билет 3 -->
+            <article class="movie-card movie-card--ticket">
+                <div class="ticket">
+                    <div class="ticket__header">OPPENHEIMER</div>
+                    <div class="ticket__body" style="font-size: 14px; margin: 15px 0; letter-spacing: 2px;">21:45 | 2D DIGITAL</div>
+                    <button class="hero__btn hero__btn--primary" style="padding: 10px 30px; font-size: 14px;">ЗАБРОНИРОВАТЬ</button>
+                    <div class="ticket__footer" style="margin-top: 20px; font-size: 10px; opacity: 0.5;">ROW: 10 SEAT: 24</div>
+                </div>
+            </article>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer__container">
+            <div class="footer__logo">MovieHub</div>
+            <nav class="footer__nav">
+                <a href="about.html">О проекте</a> 
+                <a href="help.html">Помощь</a> 
+                <a href="privacy.html">Политика конфиденциальности</a>
+            </nav>
+            <div class="footer__socials" style="color: var(--accent-sand); opacity: 0.5;">VK • TG • GH</div>
+        </div>
+        <p class="footer__copyright" style="text-align: center; color: #333; margin-top: 20px;">&copy; 2026 MovieHub. Дизайн выполнен для ЛР №3</p>
+    </footer>
+    <script src="js/script.js"></script>
+</body>
+</html>
