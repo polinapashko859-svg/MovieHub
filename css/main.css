@@ -303,3 +303,34 @@
     margin: 40px 0 30px;
     color: var(--accent-sand);
 }
+
+
+.rating-stars {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.star {
+    width: 20px;
+    height: 20px;
+    fill: var(--accent-sand); 
+    cursor: pointer;
+    transition: fill 0.3s ease, transform 0.2s ease;
+}
+
+
+.star:hover {
+    transform: scale(1.2);
+}
+
+
+.star--active {
+    fill: var(--primary-red) !important; 
+}
+
+.rating-stars--hero .star {
+    width: 24px;
+    height: 24px;
+}

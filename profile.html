@@ -45,12 +45,25 @@
         </div>
     </header>
 
-    <main class="main" style="padding-top: 150px; text-align: center;">
+    <main class="main" style="padding-top: 150px; text-align: center; min-height: 80vh;">
         <h1 class="hero__title" style="font-size: 60px; color: white;">ПРОФИЛЬ</h1>
-        <div style="max-width: 450px; margin: 50px auto; background: var(--bg-dark-warm); padding: 50px; border-radius: 25px; border: 1px solid rgba(156,138,115,0.2); box-shadow: 0 20px 40px rgba(0,0,0,0.5);">
-            <img src="images/avatar_figma.png" style="width: 140px; height: 140px; border-radius: 50%; border: 4px solid var(--accent-sand); margin-bottom: 25px; object-fit: cover;">
-            <h2 style="font-family: var(--font-header); color: var(--accent-sand); font-size: 32px; letter-spacing: 2px;">POLINA PASHKO</h2>
-            <p style="color: white; opacity: 0.5;">Premium Подписка: Активна до 2027</p>
+        
+        <div style="max-width: 450px; margin: 30px auto; background: var(--bg-dark-warm); padding: 40px; border-radius: 25px; border: 1px solid rgba(156,138,115,0.2);">
+            <img src="images/avatar_figma.png" style="width: 120px; height: 120px; border-radius: 50%; border: 3px solid var(--accent-sand); margin-bottom: 20px; object-fit: cover;">
+            <h2 style="font-family: var(--font-header); color: var(--accent-sand); font-size: 32px;">POLINA PASHKO</h2>
+            <p style="color: white; opacity: 0.5;">Киноман • Premium</p>
+        </div>
+
+        
+        <div class="profile-settings" style="max-width: 450px; margin: 30px auto; background: var(--bg-dark-warm); padding: 30px; border-radius: 25px; border: 1px solid rgba(156,138,115,0.1);">
+            <h3 style="color: var(--accent-sand); font-family: 'Iceland'; letter-spacing: 2px;">ПЕРСОНАЛЬНЫЕ ПОДБОРКИ</h3>
+            <p style="font-size: 13px; opacity: 0.6; margin-bottom: 20px;">Введите email, чтобы получать рекомендации на почту</p>
+            
+            <form id="profileForm" style="display: flex; flex-direction: column; gap: 15px;">
+                <input type="text" placeholder="Ваше имя" style="padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid var(--accent-sand); color: white; border-radius: 8px;">
+                <input type="email" id="email" placeholder="Email для связи" style="padding: 12px; background: rgba(0,0,0,0.3); border: 1px solid var(--accent-sand); color: white; border-radius: 8px;">
+                <button type="submit" class="hero__btn hero__btn--primary" style="padding: 12px; font-size: 14px; width: 100%;">ПОДПИСАТЬСЯ</button>
+            </form>
         </div>
     </main>
 
@@ -62,6 +75,6 @@
         </div>
         <p class="footer__copyright">&copy; 2026 MovieHub. Все права защищены</p>
     </footer>
-    <script src="js/script.js"></script>
+    <script type="module" src="js/script.js"></script>
 </body>
 </html>

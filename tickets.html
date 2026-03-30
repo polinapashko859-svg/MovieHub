@@ -10,7 +10,6 @@
 </head>
 
 <body itemscope itemtype="https://schema.org/WebPage">
-    <!-- Боковая панель меню -->
     <div class="side-menu" id="sideMenu">
         <div class="side-menu__close" id="closeMenu">&times;</div>
         <ul class="side-menu__list">
@@ -40,7 +39,6 @@
                 </ul>
             </nav>
             <div class="header__actions">
-                <!-- Кнопка поиска удалена -->
                 <button class="icon-btn notify-bell" aria-label="Уведомления">
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9C8A73" stroke-width="2">
                         <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>
@@ -58,7 +56,7 @@
         <p style="text-align: center; color: var(--accent-sand); font-family: 'Iceland'; letter-spacing: 5px; opacity: 0.6; margin-bottom: 50px;">ВЫБЕРИТЕ ВАШ СЕАНС</p>
 
         <section class="tickets-page-grid" style="padding: 0 80px 80px; justify-content: center; gap: 40px;">
-            <!-- Билет 1 -->
+
             <article class="movie-card movie-card--ticket" itemscope itemtype="https://schema.org/Event">
                 <div class="ticket">
                     <div class="ticket__header" itemprop="name">DUNE: PART II</div>
@@ -70,7 +68,7 @@
                 </div>
             </article>
 
-            <!-- Билет 2 -->
+
             <article class="movie-card movie-card--ticket">
                 <div class="ticket">
                     <div class="ticket__header">AVATAR 3</div>
@@ -80,7 +78,6 @@
                 </div>
             </article>
 
-            <!-- Билет 3 -->
             <article class="movie-card movie-card--ticket">
                 <div class="ticket">
                     <div class="ticket__header">OPPENHEIMER</div>
@@ -104,6 +101,6 @@
         </div>
         <p class="footer__copyright" style="text-align: center; color: #333; margin-top: 20px;">&copy; 2026 MovieHub. Дизайн выполнен для ЛР №3</p>
     </footer>
-    <script src="js/script.js"></script>
+    <script type="module" src="js/script.js"></script>
 </body>
 </html>
