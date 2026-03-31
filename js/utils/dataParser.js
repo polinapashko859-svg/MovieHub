@@ -6,12 +6,9 @@ export const createMovieElement = (movie) => {
         : 'https://via.placeholder.com/500x750?text=No+Poster';
 
     const div = document.createElement('div');
-    // Используем твой родной класс из CSS
     div.className = 'movie-card'; 
-    // Применяем твой стиль с картинкой фоном
     div.style.backgroundImage = `url('${posterUrl}')`;
     
-    // Добавляем внутреннюю разметку для названия и кнопки
     div.innerHTML = `
         <div class="ticket-content" style="background: rgba(0,0,0,0.7); opacity: 0; transition: 0.3s; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; border-radius: 12px;">
             <strong style="color: white; text-align: center; padding: 10px; font-size: 1.1rem;">${movie.title}</strong>
@@ -19,7 +16,6 @@ export const createMovieElement = (movie) => {
         </div>
     `;
 
-    // Чтобы при наведении красиво проявлялось название
     div.onmouseenter = () => div.querySelector('.ticket-content').style.opacity = '1';
     div.onmouseleave = () => div.querySelector('.ticket-content').style.opacity = '0';
 

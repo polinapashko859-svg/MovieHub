@@ -1,38 +1,51 @@
-class LocalStorageService {
-    constructor() {
-        this.storage = window.localStorage;
-    }
+const FAVORITES_KEY = 'moviehub_favorites';
+const CACHE_KEY_PREFIX = 'moviehub_cache_';
 
-    set(key, value) {
-        const item = {
-            data: value,
-            timestamp: Date.now()
+export const movieStorage = {
+
+    getFavorites() {
+        const data = localStorage.getItem(FAVORITES_KEY);
+        return data ? JSON.parse(data) : [];
+    },
+
+    addToFavorites(movie) {
+        const favorites = this.getFavorites();
+        if (!favorites.some(m => m.id === movie.id)) {
+            favorites.push(movie);
+            localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+            return true;
+        }
+        return false;
+    },
+
+    removeFromFavorites(movieId) {
+        let favorites = this.getFavorites();
+        favorites = favorites.filter(m => m.id !== movieId);
+        localStorage.setItem(FAVORITES_KEY, JSON.stringify(favorites));
+    },
+
+    isFavorite(movieId) {
+        return this.getFavorites().some(m => m.id === movieId);
+    },
+
+    saveCache(key, data, ttlMinutes = 60) {
+        const cacheItem = {
+            data: data,
+            timestamp: Date.now(),
+            ttl: ttlMinutes * 60 * 1000
         };
-        this.storage.setItem(key, JSON.stringify(item));
-    }
+        localStorage.setItem(`${CACHE_KEY_PREFIX}${key}`, JSON.stringify(cacheItem));
+    },
 
-    get(key, maxAge = 3600000) {
-        const raw = this.storage.getItem(key);
-        if (!raw) return null;
+    getCache(key) {
+        const item = localStorage.getItem(`${CACHE_KEY_PREFIX}${key}`);
+        if (!item) return null;
 
-        const item = JSON.parse(raw);
-        const now = Date.now();
-
-        if (maxAge !== Infinity && (now - item.timestamp > maxAge)) {
-            this.storage.removeItem(key);
+        const parsed = JSON.parse(item);
+        if (Date.now() - parsed.timestamp > parsed.ttl) {
+            localStorage.removeItem(`${CACHE_KEY_PREFIX}${key}`);
             return null;
         }
-
-        return item.data;
+        return parsed.data;
     }
-
-    saveFavorite(movie) {
-        const favorites = this.get('favorites', Infinity) || [];
-        if (!favorites.find(m => m.id === movie.id)) {
-            favorites.push(movie);
-            this.set('favorites', favorites);
-        }
-    }
-}
-
-export const localStore = new LocalStorageService();
+};

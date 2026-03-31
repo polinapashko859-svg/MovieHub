@@ -1,31 +1,46 @@
-import { API_CONFIG } from './config.js';
+import { TMDB_CONFIG } from './config.js';
 
-class ApiService {
-    constructor() {
-        this.baseURL = API_CONFIG.movie.url;
-        this.apiKey = API_CONFIG.movie.apiKey;
-    }
+export const tmdbAPI = {
 
-    async get(endpoint, params = {}) {
+    async getPopular(page = 1) {
         try {
-            const searchParams = new URLSearchParams({
-                api_key: this.apiKey,
-                language: 'ru-RU',
-                ...params
-            });
-
-            const response = await fetch(`${this.baseURL}${endpoint}?${searchParams}`);
-
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
+            const url = `${TMDB_CONFIG.BASE_URL}/movie/popular?language=${TMDB_CONFIG.LANGUAGE}&page=${page}&api_key=${TMDB_CONFIG.API_KEY}`;
+            const response = await fetch(url);
+            
+            if (!response.ok) throw new Error(`Ошибка: ${response.status}`);
             return await response.json();
         } catch (error) {
-            console.error('ApiService Error:', error);
+            console.error('Ошибка загрузки популярных фильмов:', error);
             throw error;
         }
-    }
-}
+    },
 
-export const apiService = new ApiService();
+    async searchMovies(query, page = 1) {
+        try {
+            const url = `${TMDB_CONFIG.BASE_URL}/search/movie?query=${encodeURIComponent(query)}&language=${TMDB_CONFIG.LANGUAGE}&page=${page}&api_key=${TMDB_CONFIG.API_KEY}`;
+            const response = await fetch(url);
+            if (!response.ok) throw new Error('Ошибка поиска');
+            return await response.json();
+        } catch (error) {
+            console.error('Ошибка поиска фильмов:', error);
+            throw error;
+        }
+    },
+
+    async getMovieDetails(movieId) {
+        try {
+            const url = `${TMDB_CONFIG.BASE_URL}/movie/${movieId}?language=${TMDB_CONFIG.LANGUAGE}&append_to_response=videos&api_key=${TMDB_CONFIG.API_KEY}`;
+            const response = await fetch(url);
+            if (!response.ok) throw new Error('Фильм не найден');
+            return await response.json();
+        } catch (error) {
+            console.error('Ошибка получения деталей:', error);
+            throw error;
+        }
+    },
+
+    getPosterUrl(posterPath, size = 'w500') {
+        if (!posterPath) return TMDB_CONFIG.DEFAULT_POSTER;
+        return `${TMDB_CONFIG.IMAGE_BASE_URL}${size}${posterPath}`;
+    }
+};
