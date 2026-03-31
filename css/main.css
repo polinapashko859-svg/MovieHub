@@ -32,8 +32,8 @@
 
 .hero__rating-badge {
     position: absolute;
-    top: 110px;
-    right: 30px;
+    top: 80px;
+    right: 40px;
     background: rgba(255,255,255,0.06);
     backdrop-filter: blur(12px);
     padding: 8px 16px;
@@ -46,7 +46,7 @@
 }
 
 @media (min-width: 768px) {
-    .hero__rating-badge { top: 140px; right: 60px; }
+    .hero__rating-badge { top: 100px; right: 60px; }
 }
 
 .hero__meta {
@@ -331,6 +331,6 @@
 }
 
 .rating-stars--hero .star {
-    width: 24px;
-    height: 24px;
+    width: 28px;
+    height: 28px;
 }

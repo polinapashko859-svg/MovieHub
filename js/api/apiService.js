@@ -1,3 +1,4 @@
+// js/api/apiService.js
 import { TMDB_CONFIG } from './config.js';
 
 export const tmdbAPI = {
@@ -7,7 +8,7 @@ export const tmdbAPI = {
             const url = `${TMDB_CONFIG.BASE_URL}/movie/popular?language=${TMDB_CONFIG.LANGUAGE}&page=${page}&api_key=${TMDB_CONFIG.API_KEY}`;
             const response = await fetch(url);
             
-            if (!response.ok) throw new Error(`Ошибка: ${response.status}`);
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             return await response.json();
         } catch (error) {
             console.error('Ошибка загрузки популярных фильмов:', error);
@@ -19,7 +20,7 @@ export const tmdbAPI = {
         try {
             const url = `${TMDB_CONFIG.BASE_URL}/search/movie?query=${encodeURIComponent(query)}&language=${TMDB_CONFIG.LANGUAGE}&page=${page}&api_key=${TMDB_CONFIG.API_KEY}`;
             const response = await fetch(url);
-            if (!response.ok) throw new Error('Ошибка поиска');
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             return await response.json();
         } catch (error) {
             console.error('Ошибка поиска фильмов:', error);
@@ -31,10 +32,10 @@ export const tmdbAPI = {
         try {
             const url = `${TMDB_CONFIG.BASE_URL}/movie/${movieId}?language=${TMDB_CONFIG.LANGUAGE}&append_to_response=videos&api_key=${TMDB_CONFIG.API_KEY}`;
             const response = await fetch(url);
-            if (!response.ok) throw new Error('Фильм не найден');
+            if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
             return await response.json();
         } catch (error) {
-            console.error('Ошибка получения деталей:', error);
+            console.error('Ошибка получения деталей фильма:', error);
             throw error;
         }
     },

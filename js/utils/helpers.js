@@ -1,4 +1,6 @@
-function logAppStatus(message) {
+// js/utils/helpers.js
+
+export function logAppStatus(message) {
     console.log(`[MovieHub Log]: ${message}`);
 }
 
@@ -54,7 +56,7 @@ export const getRecommendationByRating = () => {
 
         for (let i = 0; i < localStorage.length; i++) {
             const key = localStorage.key(i);
-            if (key.startsWith('rating-')) {
+            if (key && key.startsWith('rating-')) {
                 const rating = parseInt(localStorage.getItem(key));
                 const movieId = key.replace('rating-', '');
 
@@ -68,15 +70,15 @@ export const getRecommendationByRating = () => {
         }
 
         if (topMovieIds.length === 0) return recommendationsDB.default;
+        
         const randomId = topMovieIds[Math.floor(Math.random() * topMovieIds.length)];
         return recommendationsDB[randomId] || recommendationsDB.default;
 
     } catch (error) {
         console.error("Ошибка при чтении localStorage:", error);
-        return recommendationsDB.default; 
+        return recommendationsDB.default;
     }
 };
-
 
 export const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 export const validateName = (name) => /^[a-zA-Zа-яА-ЯёЁ\s\-]+$/.test(name) && name.length >= 2;
@@ -92,9 +94,8 @@ export const showError = (element, message) => {
 };
 
 export const clearErrors = (element) => {
+    if (!element) return;
     element.style.borderColor = '';
     const error = element.parentNode.querySelector('.error-message');
     if (error) error.remove();
 };
-
-

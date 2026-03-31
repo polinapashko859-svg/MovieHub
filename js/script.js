@@ -1,25 +1,27 @@
+// js/script.js
 import { tmdbAPI } from './api/apiService.js';
 import { movieStorage } from './storage/localStorage.js';
+import { sessionStorageService } from './storage/sessionStorage.js';
+import { createMovieElement } from './utils/dataParser.js';
 import { validateEmail, validateName, showError, clearErrors, getRecommendationByRating } from './utils/helpers.js';
 import { openTrailer, showAdvancedRecommendation } from './utils/modal.js';
 
 let currentMovies = [];
 
 document.addEventListener('DOMContentLoaded', async () => {
-    console.log('[MovieHub Log]: 6 лабораторная запущена');
+    console.log('[MovieHub Log]: Лабораторная работа №6 — финальная версия');
 
     await loadPopularMovies();
-
+    
+    setupSearch();                    // ← важно вызвать рано
     setupRatingSystem();
     setupRecommendationButton();
     setupProfileForm();
     setupTrailerButtons();
     setupMenu();
-    setupSearch();
     setupFavorites();
+    setupOfflineMode();
 });
-
-
 
 async function loadPopularMovies() {
     const grid = document.querySelector('.catalog__grid');
@@ -38,19 +40,19 @@ async function loadPopularMovies() {
         renderMovies(currentMovies, grid);
     } catch (err) {
         console.error(err);
-        showErrorMessage(grid, "Не удалось загрузить фильмы. Проверьте интернет-соединение.");
+        showErrorMessage(grid, "Не удалось загрузить фильмы.");
     }
 }
 
 function showLoading(container) {
-    container.innerHTML = `<p style="grid-column:1/-1;text-align:center;color:#9C8A73;padding:50px;">Загрузка фильмов...</p>`;
+    container.innerHTML = `<p style="grid-column:1/-1;text-align:center;color:#9C8A73;padding:60px;">Загрузка фильмов...</p>`;
 }
 
 function showErrorMessage(container, msg) {
     container.innerHTML = `
-        <p style="grid-column:1/-1;text-align:center;color:#F40007;padding:40px;">
+        <p style="grid-column:1/-1;text-align:center;color:#F40007;padding:50px;">
             ${msg}<br><br>
-            <button onclick="location.reload()" style="padding:10px 20px;background:#530507;color:white;border:none;border-radius:8px;cursor:pointer;">
+            <button onclick="location.reload()" style="padding:12px 24px;background:#530507;color:white;border:none;border-radius:8px;cursor:pointer;">
                 Попробовать снова
             </button>
         </p>`;
@@ -58,26 +60,8 @@ function showErrorMessage(container, msg) {
 
 function renderMovies(movies, container) {
     container.innerHTML = '';
-
     movies.forEach(movie => {
-        const isFav = movieStorage.isFavorite(movie.id);
-        const poster = tmdbAPI.getPosterUrl(movie.poster_path);
-
-        const card = document.createElement('article');
-        card.className = 'movie-card';
-        card.innerHTML = `
-            <figure class="movie-card__figure">
-                <img src="${poster}" alt="${movie.title}" class="movie-card__img">
-                <button class="favorite-btn ${isFav ? 'active' : ''}" data-id="${movie.id}" title="В избранное">
-                    ❤️
-                </button>
-                <figcaption class="movie-card__caption">
-                    ${movie.title}
-                    <small>${movie.release_date ? movie.release_date.slice(0,4) : ''}</small>
-                    <div class="rating-stars" data-movie-id="${movie.id}"></div>
-                </figcaption>
-            </figure>
-        `;
+        const card = createMovieElement(movie);
         container.appendChild(card);
     });
 
@@ -85,24 +69,27 @@ function renderMovies(movies, container) {
     setupFavoriteButtons();
 }
 
-
-
-
 function setupFavorites() {
     renderFavoritesSection();
 }
 
 function setupFavoriteButtons() {
     document.querySelectorAll('.favorite-btn').forEach(btn => {
+        btn.replaceWith(btn.cloneNode(true)); // очищаем старые обработчики
+    });
+
+    document.querySelectorAll('.favorite-btn').forEach(btn => {
         btn.addEventListener('click', (e) => {
-            e.stopPropagation();
+            e.stopImmediatePropagation();
+
             const id = parseInt(btn.dataset.id);
             const movie = currentMovies.find(m => m.id === id);
 
             if (movieStorage.isFavorite(id)) {
                 movieStorage.removeFromFavorites(id);
                 btn.classList.remove('active');
-            } else {
+                btn.textContent = '♡';
+            } else if (movie) {
                 movieStorage.addToFavorites({
                     id: movie.id,
                     title: movie.title,
@@ -110,6 +97,7 @@ function setupFavoriteButtons() {
                     release_date: movie.release_date
                 });
                 btn.classList.add('active');
+                btn.textContent = '♥';
             }
             renderFavoritesSection();
         });
@@ -118,26 +106,52 @@ function setupFavoriteButtons() {
 
 function renderFavoritesSection() {
     const favorites = movieStorage.getFavorites();
-    console.log('%cИзбранные фильмы:', 'color:#F40007', favorites);
+    const container = document.getElementById('favorites-grid');
+    const section = document.getElementById('favorites-section');
+
+    if (!container || !section) return;
+
+    section.style.display = favorites.length > 0 ? 'block' : 'none';
+
+    if (favorites.length === 0) return;
+
+    container.innerHTML = '';
+    favorites.forEach(movie => {
+        const card = createMovieElement(movie);
+        const favBtn = card.querySelector('.favorite-btn');
+        if (favBtn) {
+            favBtn.classList.add('active');
+            favBtn.textContent = '♥';
+        }
+        container.appendChild(card);
+    });
+
+    setupRatingSystem();
+    setupFavoriteButtons();
 }
 
-
-
+// ==================== ИСПРАВЛЕННЫЙ ПОИСК ====================
 function setupSearch() {
-    const nav = document.querySelector('.header__nav ul');
-    if (!nav) return;
+    const searchContainer = document.querySelector('.header__nav ul');
+    if (!searchContainer) return;
 
-    const searchContainer = document.createElement('li');
-    searchContainer.innerHTML = `
+    // Если поиск уже есть — не добавляем дубликат
+    if (document.getElementById('searchInput')) return;
+
+    const li = document.createElement('li');
+    li.innerHTML = `
         <input type="text" id="searchInput" placeholder="Поиск фильмов..." 
-               style="padding:8px 16px; border-radius:20px; border:1px solid #9C8A73; background:#1B0D0F; color:white; width:240px;">
+               style="padding:10px 18px; border-radius:30px; border:1px solid #9C8A73; 
+                      background:#1B0D0F; color:white; width:260px; font-size:15px;">
     `;
-    nav.appendChild(searchContainer);
+    searchContainer.appendChild(li);
 
     const input = document.getElementById('searchInput');
+
     input.addEventListener('input', debounce(async (e) => {
         const query = e.target.value.trim();
         const grid = document.querySelector('.catalog__grid');
+        if (!grid) return;
 
         if (query.length < 2) {
             renderMovies(currentMovies, grid);
@@ -145,14 +159,16 @@ function setupSearch() {
         }
 
         showLoading(grid);
+
         try {
             const data = await tmdbAPI.searchMovies(query);
             currentMovies = data.results || [];
             renderMovies(currentMovies, grid);
+            sessionStorageService.saveLastSearch(query);
         } catch (err) {
-            showErrorMessage(grid, "Ошибка поиска");
+            showErrorMessage(grid, "Ошибка поиска. Попробуйте позже.");
         }
-    }, 500));
+    }, 400));
 }
 
 function debounce(fn, delay) {
@@ -163,9 +179,7 @@ function debounce(fn, delay) {
     };
 }
 
-
-
-
+// ==================== ОСТАЛЬНЫЕ ФУНКЦИИ ====================
 function setupRatingSystem() {
     const starContainers = document.querySelectorAll('.rating-stars');
     starContainers.forEach(container => {
@@ -173,9 +187,7 @@ function setupRatingSystem() {
         const stars = container.querySelectorAll('.star');
 
         const highlight = (rating) => {
-            stars.forEach(s => {
-                s.classList.toggle('star--active', parseInt(s.dataset.value) <= rating);
-            });
+            stars.forEach(s => s.classList.toggle('star--active', parseInt(s.dataset.value) <= rating));
         };
 
         highlight(localStorage.getItem(`rating-${movieId}`) || 0);
@@ -195,7 +207,6 @@ function setupRatingSystem() {
                 const val = star.dataset.value;
                 localStorage.setItem(`rating-${movieId}`, val);
                 highlight(val);
-                alert(`Оценка ${val}/5 сохранена для фильма "${star.closest('.movie-card__caption').textContent.trim()}"`);
             }
         });
     });
@@ -205,16 +216,19 @@ function setupRecommendationButton() {
     const heroContent = document.querySelector('.hero__content');
     if (!heroContent) return;
 
-    const recBtn = document.createElement('button');
-    recBtn.className = 'hero__btn hero__btn--outline';
-    recBtn.textContent = 'ПОДОБРАТЬ ФИЛЬМ';
-    recBtn.style.marginTop = '20px';
-    heroContent.appendChild(recBtn);
+    let recBtn = heroContent.querySelector('.rec-btn');
+    if (!recBtn) {
+        recBtn = document.createElement('button');
+        recBtn.className = 'hero__btn hero__btn--outline rec-btn';
+        recBtn.textContent = 'ПОДОБРАТЬ ФИЛЬМ';
+        recBtn.style.marginTop = '25px';
+        heroContent.appendChild(recBtn);
+    }
 
-    recBtn.addEventListener('click', () => {
+    recBtn.onclick = () => {
         const movie = getRecommendationByRating();
         showAdvancedRecommendation(movie, openTrailer);
-    });
+    };
 }
 
 function setupProfileForm() {
@@ -224,15 +238,14 @@ function setupProfileForm() {
     const nameInput = document.getElementById('userName');
     const emailInput = document.getElementById('email');
 
-    // ... (твой старый код валидации остаётся без изменений)
-    nameInput.addEventListener('blur', () => {
+    nameInput?.addEventListener('blur', () => {
         clearErrors(nameInput);
-        if (!validateName(nameInput.value.trim())) showError(nameInput, "Имя должно содержать только буквы (мин. 2)");
+        if (!validateName(nameInput.value.trim())) showError(nameInput, "Имя должно содержать только буквы (мин. 2 символа)");
     });
 
-    emailInput.addEventListener('blur', () => {
+    emailInput?.addEventListener('blur', () => {
         clearErrors(emailInput);
-        if (!validateEmail(emailInput.value.trim())) showError(emailInput, "Неверный формат почты");
+        if (!validateEmail(emailInput.value.trim())) showError(emailInput, "Неверный формат email");
     });
 
     profileForm.addEventListener('submit', (e) => {
@@ -240,20 +253,16 @@ function setupProfileForm() {
         clearErrors(nameInput);
         clearErrors(emailInput);
 
-        if (validateName(nameInput.value.trim()) && validateEmail(emailInput.value.trim())) {
-            alert(`Поздравляем, ${nameInput.value.toUpperCase()}! Вы успешно подписаны.`);
+        if (validateName(nameInput?.value.trim()) && validateEmail(emailInput?.value.trim())) {
+            alert(`Поздравляем, ${nameInput.value}! Вы успешно подписаны.`);
             profileForm.reset();
-        } else {
-            alert("Пожалуйста, исправьте ошибки в форме.");
         }
     });
 }
 
 function setupTrailerButtons() {
     const watchBtn = document.querySelector('.hero__btn--primary');
-    if (watchBtn && watchBtn.textContent.includes('СМОТРЕТЬ')) {
-        watchBtn.addEventListener('click', () => openTrailer('https://www.youtube.com/embed/n9xhJrPXop4'));
-    }
+    watchBtn?.addEventListener('click', () => openTrailer('https://www.youtube.com/embed/n9xhJrPXop4'));
 
     const trailerBtn = document.querySelector('.hero__btns .hero__btn--outline');
     if (trailerBtn && trailerBtn.textContent === 'ТРЕЙЛЕР') {
@@ -269,6 +278,16 @@ function setupMenu() {
     const sideMenu = document.getElementById('sideMenu');
     const closeBtn = document.getElementById('closeMenu');
 
-    if (burgerBtn && sideMenu) burgerBtn.addEventListener('click', () => sideMenu.classList.add('side-menu--open'));
-    if (closeBtn && sideMenu) closeBtn.addEventListener('click', () => sideMenu.classList.remove('side-menu--open'));
+    burgerBtn?.addEventListener('click', () => sideMenu.classList.add('side-menu--open'));
+    closeBtn?.addEventListener('click', () => sideMenu.classList.remove('side-menu--open'));
+}
+
+function setupOfflineMode() {
+    window.addEventListener('offline', () => {
+        const banner = document.createElement('div');
+        banner.style.cssText = 'position:fixed;top:90px;left:0;right:0;background:#530507;color:white;text-align:center;padding:14px;z-index:9999;';
+        banner.textContent = '🌐 Оффлайн-режим • Работает кэш и избранное';
+        document.body.appendChild(banner);
+        setTimeout(() => banner.remove(), 4000);
+    });
 }

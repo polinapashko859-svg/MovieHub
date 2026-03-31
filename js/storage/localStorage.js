@@ -1,3 +1,4 @@
+// js/storage/localStorage.js
 const FAVORITES_KEY = 'moviehub_favorites';
 const CACHE_KEY_PREFIX = 'moviehub_cache_';
 
@@ -28,7 +29,7 @@ export const movieStorage = {
         return this.getFavorites().some(m => m.id === movieId);
     },
 
-    saveCache(key, data, ttlMinutes = 60) {
+    saveCache(key, data, ttlMinutes = 30) {
         const cacheItem = {
             data: data,
             timestamp: Date.now(),
