@@ -15,11 +15,11 @@ function openVideoPlayer() {
 
 export const openTrailer = (videoUrl) => {
     const modal = document.createElement('div');
-    modal.style.cssText = `position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:10000; display:flex; justify-content:center; align-items:center; cursor:pointer;`;
+    modal.style.cssText = `position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:10000; display:flex; justify-content:center; align-items:center; cursor:pointer;`;
     modal.innerHTML = `
         <div style="position:relative; width:80%; max-width:900px; aspect-ratio:16/9;">
-            <iframe width="100%" height="100%" src="${videoUrl}" frameborder="0" allowfullscreen></iframe>
-            <div style="position:absolute; top:-40px; right:0; color:white; font-size:40px;">&times;</div>
+            <iframe width="100%" height="100%" src="${videoUrl}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            <div style="position:absolute; top:-50px; right:0; color:white; font-size:40px;">&times;</div>
         </div>
     `;
     document.body.appendChild(modal);

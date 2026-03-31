@@ -1,13 +1,13 @@
-// 1. ИМПОРТЫ (Всегда в самом верху)
+
 import { validateEmail, showError, clearErrors, getRecommendationByRating } from './utils/helpers.js';
 import { openTrailer, showAdvancedRecommendation } from './components/modal.js';
 
-// Вспомогательная функция для логирования
+
 function logAppStatus(message) {
     console.log(`[MovieHub Log]: ${message}`);
 }
 
-// Простой плеер для кнопки "СМОТРЕТЬ" (черный экран с кнопкой Play)
+
 function openSimpleOverlay() {
     const overlay = document.createElement('div');
     overlay.style.cssText = `
@@ -26,14 +26,14 @@ function openSimpleOverlay() {
 document.addEventListener('DOMContentLoaded', () => {
     logAppStatus("Интерактивная система MovieHub запущена.");
 
-    // --- 1. ЛОГИКА РЕЙТИНГА (SVG ЗВЕЗДЫ) ---
+    
     const starContainers = document.querySelectorAll('.rating-stars');
     
     starContainers.forEach(container => {
         const movieId = container.dataset.movieId;
         const stars = container.querySelectorAll('.star');
 
-        // Функция окрашивания звезд
+        
         const highlight = (rating) => {
             stars.forEach(s => {
                 if (parseInt(s.dataset.value) <= rating) {
@@ -44,23 +44,23 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         };
 
-        // Загружаем оценку из памяти браузера при загрузке страницы
+        
         const savedRating = localStorage.getItem(`rating-${movieId}`) || 0;
         highlight(savedRating);
 
-        // Событие: Наведение (Подсвечиваем временно)
+        
         container.addEventListener('mouseover', (e) => {
             const star = e.target.closest('.star');
             if (star) highlight(star.dataset.value);
         });
 
-        // Событие: Увод мыши (Возвращаем к сохраненному в localStorage значению)
+        
         container.addEventListener('mouseleave', () => {
             const currentSaved = localStorage.getItem(`rating-${movieId}`) || 0;
             highlight(currentSaved);
         });
 
-        // Событие: Клик (Сохраняем навсегда)
+        
         container.addEventListener('click', (e) => {
             const star = e.target.closest('.star');
             if (star) {
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // --- 2. ПЕРСОНАЛИЗИРОВАННЫЕ РЕКОМЕНДАЦИИ ---
+    
     const heroContent = document.querySelector('.hero__content');
     if (heroContent) {
         const recBtn = document.createElement('button');
@@ -82,14 +82,14 @@ document.addEventListener('DOMContentLoaded', () => {
         heroContent.appendChild(recBtn);
 
         recBtn.addEventListener('click', () => {
-            // getRecommendationByRating анализирует localStorage и ищет оценки "5"
+            
             const movie = getRecommendationByRating();
-            // Показываем красивое модальное окно с кнопкой Трейлера внутри
+           
             showAdvancedRecommendation(movie, openTrailer);
         });
     }
 
-    // --- 3. ВАЛИДАЦИЯ ФОРМЫ (В ПРОФИЛЕ) ---
+    
     const emailInput = document.getElementById('email');
     if (emailInput) {
         emailInput.addEventListener('blur', () => {
@@ -100,7 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- 4. БУРГЕР-МЕНЮ И УВЕДОМЛЕНИЯ ---
+    
     const sideMenu = document.getElementById('sideMenu');
     const burgerBtn = document.querySelector('.burger-menu');
     const closeBtn = document.getElementById('closeMenu');
@@ -116,14 +116,13 @@ document.addEventListener('DOMContentLoaded', () => {
         notifyBtn.addEventListener('click', () => alert("У вас нет новых уведомлений"));
     }
 
-    // --- 5. КНОПКИ ГЛАВНОГО БАННЕРА ---
-    // Кнопка "СМОТРЕТЬ"
+    
     const playMain = document.querySelector('.hero__btn--primary');
     if (playMain) {
         playMain.addEventListener('click', openSimpleOverlay);
     }
 
-    // Кнопка "ТРЕЙЛЕР" (на главной открывает YouTube Дюны)
+    
     const trailerMain = document.querySelector('.hero__btn--outline');
     if (trailerMain) {
         trailerMain.addEventListener('click', () => {
