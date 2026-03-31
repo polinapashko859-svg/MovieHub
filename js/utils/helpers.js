@@ -32,11 +32,11 @@ const recommendationsDB = {
         trailer: "https://www.youtube.com/embed/1dYv5u6v55Y" 
     },
     "4": { 
-        title: "Игра в имитацию", 
-        year: "2014", 
-        genre: "Биография / Драма",
-        img: "https://th.bing.com/th/id/OIP.YWgOedOMhUfako8svX9smwHaLH?w=129&h=193&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3", 
-        trailer: "https://www.youtube.com/embed/mK_U3_Z673Y" 
+        title: "Бегущий по лезвию 2049", 
+        year: "2017", 
+        genre: "Действие / Драма",
+        img: "https://th.bing.com/th/id/OIP.Rut1DO2NBabRSiwHuVXK1wHaKc?o=7rm=3&rs=1&pid=ImgDetMain&o=7&rm=3", 
+        trailer: "https://www.youtube.com/embed/gCcx85zbxz4" 
     },
     "default": { 
         title: "10 причин моей ненависти", 
@@ -48,37 +48,41 @@ const recommendationsDB = {
 };
 
 export const getRecommendationByRating = () => {
-    let maxRating = 0;
-    let topMovieIds = [];
+    try {
+        let maxRating = 0;
+        let topMovieIds = [];
 
-   
-    for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key.startsWith('rating-')) {
-            const rating = parseInt(localStorage.getItem(key));
-            const movieId = key.replace('rating-', '');
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            if (key.startsWith('rating-')) {
+                const rating = parseInt(localStorage.getItem(key));
+                const movieId = key.replace('rating-', '');
 
-            if (rating > maxRating) {
-                maxRating = rating;
-                topMovieIds = [movieId]; 
-            } else if (rating === maxRating && maxRating > 0) {
-                topMovieIds.push(movieId); 
+                if (rating > maxRating) {
+                    maxRating = rating;
+                    topMovieIds = [movieId];
+                } else if (rating === maxRating && maxRating > 0) {
+                    topMovieIds.push(movieId);
+                }
             }
         }
+
+        if (topMovieIds.length === 0) return recommendationsDB.default;
+        const randomId = topMovieIds[Math.floor(Math.random() * topMovieIds.length)];
+        return recommendationsDB[randomId] || recommendationsDB.default;
+
+    } catch (error) {
+        console.error("Ошибка при чтении localStorage:", error);
+        return recommendationsDB.default; 
     }
-
-    
-    if (topMovieIds.length === 0) return recommendationsDB.default;
-
-    
-    const randomId = topMovieIds[Math.floor(Math.random() * topMovieIds.length)];
-    return recommendationsDB[randomId] || recommendationsDB.default;
 };
 
 
 export const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+export const validateName = (name) => /^[a-zA-Zа-яА-ЯёЁ\s\-]+$/.test(name) && name.length >= 2;
 
 export const showError = (element, message) => {
+    clearErrors(element);
     element.style.borderColor = '#F40007';
     const error = document.createElement('div');
     error.className = 'error-message';

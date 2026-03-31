@@ -1,39 +1,30 @@
-
-import { validateEmail, showError, clearErrors, getRecommendationByRating } from './utils/helpers.js';
+import { validateEmail, validateName, showError, clearErrors, getRecommendationByRating } from './utils/helpers.js';
 import { openTrailer, showAdvancedRecommendation } from './components/modal.js';
 
-
-function logAppStatus(message) {
-    console.log(`[MovieHub Log]: ${message}`);
-}
-
-
-function openSimpleOverlay() {
-    const overlay = document.createElement('div');
-    overlay.style.cssText = `
-        position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-        background: black; z-index: 10000; display: flex;
-        justify-content: center; align-items: center; cursor: pointer;
-    `;
-    overlay.innerHTML = `
-        <div style="width: 0; height: 0; border-top: 40px solid transparent; border-left: 70px solid white; border-bottom: 40px solid transparent;"></div>
-        <p style="position:absolute; bottom:50px; color:#9C8A73; font-family: 'Iceland'; letter-spacing: 2px;">Нажмите, чтобы закрыть</p>
-    `;
-    document.body.appendChild(overlay);
-    overlay.onclick = () => overlay.remove();
-}
+const logAppStatus = (message) => console.log(`[MovieHub Log]: ${message}`);
 
 document.addEventListener('DOMContentLoaded', () => {
+    
     logAppStatus("Интерактивная система MovieHub запущена.");
 
-    
+    const logo = document.querySelector('.header__logo');
+    if (logo) logo.textContent = 'MovieHub Pro';
+
+    const firstCard = document.querySelector('.movie-card');
+    if (firstCard) {
+        const newBadge = document.createElement('span');
+        newBadge.className = 'movie-badge';
+        newBadge.textContent = 'NEW';
+        newBadge.style.cssText = 'background: #F40007; color: white; padding: 5px 10px; position: absolute; z-index: 10; border-radius: 4px; font-size: 10px; top: 10px; left: 10px; font-family: Inter;';
+        firstCard.style.position = 'relative';
+        firstCard.prepend(newBadge);
+    }
+
     const starContainers = document.querySelectorAll('.rating-stars');
-    
     starContainers.forEach(container => {
         const movieId = container.dataset.movieId;
         const stars = container.querySelectorAll('.star');
 
-        
         const highlight = (rating) => {
             stars.forEach(s => {
                 if (parseInt(s.dataset.value) <= rating) {
@@ -44,30 +35,24 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         };
 
-        
-        const savedRating = localStorage.getItem(`rating-${movieId}`) || 0;
-        highlight(savedRating);
+        highlight(localStorage.getItem(`rating-${movieId}`) || 0);
 
-        
         container.addEventListener('mouseover', (e) => {
             const star = e.target.closest('.star');
             if (star) highlight(star.dataset.value);
         });
 
-        
         container.addEventListener('mouseleave', () => {
-            const currentSaved = localStorage.getItem(`rating-${movieId}`) || 0;
-            highlight(currentSaved);
+            highlight(localStorage.getItem(`rating-${movieId}`) || 0);
         });
 
-        
         container.addEventListener('click', (e) => {
             const star = e.target.closest('.star');
             if (star) {
                 const val = star.dataset.value;
                 localStorage.setItem(`rating-${movieId}`, val);
                 highlight(val);
-                logAppStatus(`Фильм "${movieId}" получил оценку ${val}`);
+                alert(`Оценка ${val}/5 сохранена для фильма ${movieId}`);
             }
         });
     });
@@ -82,51 +67,71 @@ document.addEventListener('DOMContentLoaded', () => {
         heroContent.appendChild(recBtn);
 
         recBtn.addEventListener('click', () => {
-            
             const movie = getRecommendationByRating();
-           
             showAdvancedRecommendation(movie, openTrailer);
         });
     }
 
-    
-    const emailInput = document.getElementById('email');
-    if (emailInput) {
+    const profileForm = document.getElementById('profileForm');
+    if (profileForm) {
+        const nameInput = document.getElementById('userName');
+        const emailInput = document.getElementById('email');
+        
+        nameInput.addEventListener('blur', () => {
+            clearErrors(nameInput);
+            if (!validateName(nameInput.value.trim())) {
+                showError(nameInput, "Имя должно содержать только буквы (мин. 2)");
+            }
+        });
+
         emailInput.addEventListener('blur', () => {
             clearErrors(emailInput);
-            if (!validateEmail(emailInput.value)) {
+            if (!validateEmail(emailInput.value.trim())) {
                 showError(emailInput, "Неверный формат почты");
+            }
+        });
+
+        profileForm.addEventListener('submit', (e) => {
+            e.preventDefault(); 
+            
+            clearErrors(nameInput);
+            clearErrors(emailInput);
+
+            const isNameValid = validateName(nameInput.value.trim());
+            const isEmailValid = validateEmail(emailInput.value.trim());
+
+            if (isNameValid && isEmailValid) {
+                alert(`Поздравляем, ${nameInput.value.toUpperCase()}! Вы успешно подписаны.`);
+                profileForm.reset(); 
+            } else {
+                if (!isNameValid) showError(nameInput, "Проверьте правильность имени");
+                if (!isEmailValid) showError(emailInput, "Проверьте правильность почты");
+                alert("Пожалуйста, исправьте ошибки в форме.");
             }
         });
     }
 
-    
-    const sideMenu = document.getElementById('sideMenu');
-    const burgerBtn = document.querySelector('.burger-menu');
-    const closeBtn = document.getElementById('closeMenu');
-    const notifyBtn = document.querySelector('.notify-bell');
-
-    if (burgerBtn) {
-        burgerBtn.addEventListener('click', () => sideMenu.classList.add('side-menu--open'));
-    }
-    if (closeBtn) {
-        closeBtn.addEventListener('click', () => sideMenu.classList.remove('side-menu--open'));
-    }
-    if (notifyBtn) {
-        notifyBtn.addEventListener('click', () => alert("У вас нет новых уведомлений"));
+    const watchBtn = document.querySelector('.hero__btn--primary');
+    if (watchBtn && watchBtn.textContent === 'СМОТРЕТЬ') {
+        watchBtn.addEventListener('click', () => {
+            openTrailer('https://www.youtube.com/embed/n9xhJrPXop4'); 
+        });
     }
 
-    
-    const playMain = document.querySelector('.hero__btn--primary');
-    if (playMain) {
-        playMain.addEventListener('click', openSimpleOverlay);
-    }
-
-    
-    const trailerMain = document.querySelector('.hero__btn--outline');
-    if (trailerMain) {
-        trailerMain.addEventListener('click', () => {
+    const mainTrailerBtn = document.querySelector('.hero__btns .hero__btn--outline');
+    if (mainTrailerBtn && mainTrailerBtn.textContent === 'ТРЕЙЛЕР') {
+        mainTrailerBtn.addEventListener('click', (e) => {
+            e.preventDefault();
             openTrailer('https://www.youtube.com/embed/n9xhJrPXop4');
         });
     }
+
+    const burgerBtn = document.querySelector('.burger-menu');
+    const sideMenu = document.getElementById('sideMenu');
+    const closeBtn = document.getElementById('closeMenu');
+
+    if (burgerBtn && sideMenu) burgerBtn.addEventListener('click', () => sideMenu.classList.add('side-menu--open'));
+    if (closeBtn && sideMenu) closeBtn.addEventListener('click', () => sideMenu.classList.remove('side-menu--open'));
+    
+    document.querySelector('.notify-bell')?.addEventListener('click', () => alert("У вас нет новых уведомлений"));
 });
