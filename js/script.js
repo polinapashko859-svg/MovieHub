@@ -178,7 +178,7 @@ function debounce(fn, delay) {
     };
 }
 
-// ==================== ОСТАЛЬНЫЕ ФУНКЦИИ ====================
+
 function setupRatingSystem() {
     const starContainers = document.querySelectorAll('.rating-stars');
     starContainers.forEach(container => {
