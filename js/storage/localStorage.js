@@ -1,4 +1,3 @@
-// js/storage/localStorage.js
 const FAVORITES_KEY = 'moviehub_favorites';
 const CACHE_KEY_PREFIX = 'moviehub_cache_';
 

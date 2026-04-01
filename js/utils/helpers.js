@@ -1,5 +1,3 @@
-// js/utils/helpers.js
-
 export function logAppStatus(message) {
     console.log(`[MovieHub Log]: ${message}`);
 }

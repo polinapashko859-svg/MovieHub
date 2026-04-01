@@ -1,4 +1,3 @@
-// js/utils/dataParser.js
 import { tmdbAPI } from '../api/apiService.js';
 
 export const createMovieElement = (movie) => {

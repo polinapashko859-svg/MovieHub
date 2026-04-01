@@ -1,4 +1,3 @@
-// js/storage/sessionStorage.js
 export const sessionStorageService = {
 
     saveLastSearch(query) {

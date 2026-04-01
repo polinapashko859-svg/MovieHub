@@ -1,4 +1,3 @@
-// js/script.js
 import { tmdbAPI } from './api/apiService.js';
 import { movieStorage } from './storage/localStorage.js';
 import { sessionStorageService } from './storage/sessionStorage.js';
@@ -13,7 +12,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     await loadPopularMovies();
     
-    setupSearch();                    // ← важно вызвать рано
+    setupSearch();                   
     setupRatingSystem();
     setupRecommendationButton();
     setupProfileForm();
@@ -75,7 +74,7 @@ function setupFavorites() {
 
 function setupFavoriteButtons() {
     document.querySelectorAll('.favorite-btn').forEach(btn => {
-        btn.replaceWith(btn.cloneNode(true)); // очищаем старые обработчики
+        btn.replaceWith(btn.cloneNode(true)); 
     });
 
     document.querySelectorAll('.favorite-btn').forEach(btn => {
@@ -130,12 +129,12 @@ function renderFavoritesSection() {
     setupFavoriteButtons();
 }
 
-// ==================== ИСПРАВЛЕННЫЙ ПОИСК ====================
+
 function setupSearch() {
     const searchContainer = document.querySelector('.header__nav ul');
     if (!searchContainer) return;
 
-    // Если поиск уже есть — не добавляем дубликат
+    
     if (document.getElementById('searchInput')) return;
 
     const li = document.createElement('li');

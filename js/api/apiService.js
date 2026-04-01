@@ -1,4 +1,3 @@
-// js/api/apiService.js
 import { TMDB_CONFIG } from './config.js';
 
 export const tmdbAPI = {

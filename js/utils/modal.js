@@ -1,5 +1,3 @@
-// js/utils/modal.js
-
 export const openTrailer = (videoUrl) => {
     if (!videoUrl) {
         alert("Трейлер недоступен");
@@ -26,7 +24,7 @@ export const openTrailer = (videoUrl) => {
 
     document.body.appendChild(modal);
 
-    // Закрытие по клику на крестик и по фону
+ 
     modal.querySelector('#close-trailer').onclick = () => modal.remove();
     modal.onclick = (e) => {
         if (e.target === modal) modal.remove();
@@ -67,7 +65,6 @@ export const showAdvancedRecommendation = (movie, trailerCallback) => {
 
     document.body.appendChild(modal);
 
-    // Правильные обработчики
     document.getElementById('watch-trailer-btn').onclick = () => {
         modal.remove();
         trailerCallback(movie.trailer);
