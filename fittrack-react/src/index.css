@@ -1,0 +1,35 @@
+/* Базовый сброс стилей для корректного отображения на весь экран */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Основной фон, чтобы при загрузке не было белой вспышки */
+  background-color: #050505; 
+  
+  /* Улучшаем отрисовку шрифтов */
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  min-height: 100vh;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Самый важный блок: убираем ограничение ширины и центрирование */
+#root {
+  width: 100%;
+  min-height: 100vh;
+  display: block; /* Убираем flex, если он мешает сетке в App.jsx */
+}
+
+/* Убираем стандартные подчеркивания ссылок */
+a {
+  text-decoration: none;
+  color: inherit;
+}
