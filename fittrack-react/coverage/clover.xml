@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1776196631231" clover="3.2.0">
+  <project timestamp="1776196631232" name="All files">
+    <metrics statements="31" coveredstatements="15" conditionals="17" coveredconditionals="8" methods="17" coveredmethods="7" elements="65" coveredelements="30" complexity="0" loc="31" ncloc="31" packages="4" files="10" classes="10"/>
+    <package name="components.features">
+      <metrics statements="14" coveredstatements="3" conditionals="6" coveredconditionals="0" methods="9" coveredmethods="2"/>
+      <file name="Achievement.jsx" path="/Users/apple/Documents/MovieHub-feature-semantic-markup/fittrack-react/src/components/features/Achievement.jsx">
+        <metrics statements="2" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="3" count="0" type="stmt"/>
+        <line num="4" count="0" type="cond" truecount="0" falsecount="2"/>
+      </file>
+      <file name="ExerciseItem.jsx" path="/Users/apple/Documents/MovieHub-feature-semantic-markup/fittrack-react/src/components/features/ExerciseItem.jsx">
+        <metrics statements="2" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="2" count="0" type="stmt"/>
+      </file>
+      <file name="ProgressChart.jsx" path="/Users/apple/Documents/MovieHub-feature-semantic-markup/fittrack-react/src/components/features/ProgressChart.jsx">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+        <line num="6" count="4" type="stmt"/>
+      </file>
+      <file name="WorkoutCard.jsx" path="/Users/apple/Documents/MovieHub-feature-semantic-markup/fittrack-react/src/components/features/WorkoutCard.jsx">
+        <metrics statements="4" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="0"/>
+        <line num="7" count="0" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="21" count="0" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+      </file>
+      <file name="WorkoutList.jsx" path="/Users/apple/Documents/MovieHub-feature-semantic-markup/fittrack-react/src/components/features/WorkoutList.jsx">
+        <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="5" count="0" type="stmt"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="components.layout">
+      <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+      <file name="Header.jsx" path="/Users/apple/Documents/MovieHub-feature-semantic-markup/fittrack-react/src/components/layout/Header.jsx">
+        <metrics statements="3" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="1" count="0" type="stmt"/>
+        <line num="2" count="0" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="components.ui">
+      <metrics statements="6" coveredstatements="4" conditionals="4" coveredconditionals="2" methods="4" coveredmethods="3"/>
+      <file name="Button.jsx" path="/Users/apple/Documents/MovieHub-feature-semantic-markup/fittrack-react/src/components/ui/Button.jsx">
+        <metrics statements="2" coveredstatements="0" conditionals="1" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="1" count="0" type="cond" truecount="0" falsecount="1"/>
+        <line num="2" count="0" type="stmt"/>
+      </file>
+      <file name="Card.jsx" path="/Users/apple/Documents/MovieHub-feature-semantic-markup/fittrack-react/src/components/ui/Card.jsx">
+        <metrics statements="2" coveredstatements="2" conditionals="3" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="1" count="1" type="cond" truecount="1" falsecount="0"/>
+        <line num="2" count="1" type="stmt"/>
+      </file>
+      <file name="Timer.jsx" path="/Users/apple/Documents/MovieHub-feature-semantic-markup/fittrack-react/src/components/ui/Timer.jsx">
+        <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="3" count="1" type="stmt"/>
+        <line num="4" count="2" type="stmt"/>
+      </file>
+    </package>
+    <package name="utils">
+      <metrics statements="8" coveredstatements="8" conditionals="7" coveredconditionals="6" methods="2" coveredmethods="2"/>
+      <file name="fitness.js" path="/Users/apple/Documents/MovieHub-feature-semantic-markup/fittrack-react/src/utils/fitness.js">
+        <metrics statements="8" coveredstatements="8" conditionals="7" coveredconditionals="6" methods="2" coveredmethods="2"/>
+        <line num="4" count="1" type="cond" truecount="0" falsecount="1"/>
+        <line num="5" count="3" type="cond" truecount="4" falsecount="0"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

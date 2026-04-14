@@ -5,6 +5,17 @@ import WorkoutList from './components/features/WorkoutList';
 import ProgressChart from './components/features/ProgressChart';
 import Achievement from './components/features/Achievement';
 import './App.css';
+import { calculateCalories } from './utils/fitness';
+
+
+console.group("FitTrack Debug");
+console.log("Инициализация расчетов...");
+console.table([
+  { параметр: "Вес", значение: 70 },
+  { параметр: "Результат (ккал)", значение: calculateCalories(70, 60, 5) }
+]);
+console.groupEnd();
+
 
 function App() {
   const handleFinish = (workoutTitle) => {

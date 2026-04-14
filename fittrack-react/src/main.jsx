@@ -8,3 +8,10 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <App />
   </React.StrictMode>,
 )
+console.group("FitTrack Initialization");
+console.log("App started...");
+console.table([
+  { function: "calculateCalories", status: "tested" },
+  { function: "formatWorkoutTime", status: "tested" }
+]);
+console.groupEnd();
