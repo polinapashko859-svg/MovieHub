@@ -16,6 +16,12 @@ const WorkoutCard = ({ workout, onComplete }) => {
         <span>{workout.intensity}</span>
       </div>
 
+        <ul className="exercise-list" style={{ listStyle: 'none', padding: 0, margin: '20px 0' }}>
+          {workout.exercises.map((ex, i) => (
+            <ExerciseItem key={i} name={ex} />
+          ))}
+        </ul>
+
       <div className="workout-footer" style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
         <Timer minutes={workout.duration} />
 

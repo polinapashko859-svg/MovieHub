@@ -1,4 +1,3 @@
-/* Yeseva One — винтажный сериф, Forum — элегантный высокий шрифт, Inter — база */
 @import url('https://fonts.googleapis.com/css2?family=Yeseva+One&family=Forum&family=Inter:wght@300;400;600&family=Cormorant+Garamond:ital,wght@0,600;1,600&display=swap');
 
 :root {
@@ -101,14 +100,51 @@ body {
   mask-image: linear-gradient(to bottom, black 85%, transparent 100%);
 }
 .card__content { padding: 35px; }
-.card__title { font-family: var(--font-serif); font-size: 32px; font-style: italic; margin-bottom: 15px; }
 
+.card__title {
+   font-family: var(--font-serif); 
+   font-size: 32px; 
+   font-style: italic; 
+   margin-bottom: 15px; }
+
+.card__desc, 
+.exercise-item {
+  font-family: var(--font-serif); 
+  font-size: 19px;
+  line-height: 1.15;
+  color: var(--lilac);
+  opacity: 0.8;
+}
+
+.card__desc {
+  margin-bottom: 25px;
+  display: block;
+}
+
+.exercise-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 35px 0; 
+}
+
+.exercise-item {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.exercise-dot {
+  color: #fff;
+  font-size: 14px;
+  opacity: 1;
+}
 
 .workout-meta { 
   display: flex; 
   gap: 20px; 
-  font-family: var(--font-elegant);
-  font-size: 18px; 
+  font-family: var(--font-serif);
+  font-size: 22px; 
   letter-spacing: 1px; 
   color: var(--lilac) !important; 
 }
